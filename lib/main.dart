@@ -1,32 +1,63 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: LayoutRulesExample(),
-  ));
+  runApp(const MyApp());
 }
 
-class LayoutRulesExample extends StatelessWidget {
-  const LayoutRulesExample({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Profil Mahasiswa',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2563EB)),
+        useMaterial3: true,
+      ),
+      home: const ProfilePage(),
+    );
+  }
+}
+
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final String userName = 'Fikri Bintang Purnomo';
+  final String nim = '1122140142';
+  final String role = 'Mobile Developer & Mahasiswa';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
-        title: const Text('Tiga Aturan Layout Flutter'),
+        title: const Text(
+          'Profil Pengguna',
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+        ),
         centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: const Color(0xFF1E293B),
+        elevation: 0,
       ),
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MyPages1(),
-            Divider(height: 40, thickness: 2),
-            MyPages2(),
-            Divider(height: 40, thickness: 2),
-            MyPages3(),
+            const ProfileAvatar(),
+            const SizedBox(height: 16),
+            ProfileInfo(
+              userName: userName,
+              nim: nim,
+              role: role,
+            ),
           ],
         ),
       ),
@@ -34,144 +65,75 @@ class LayoutRulesExample extends StatelessWidget {
   }
 }
 
-class MyPages1 extends StatelessWidget {
-  const MyPages1({super.key});
+class ProfileAvatar extends StatelessWidget {
+  const ProfileAvatar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          '1 & 2. Aturan Constraints (Batas) dan Size (Ukuran)',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        const Text(
-          'Induk memaksa anak berada di batas 100x100 hingga 200x200. '
-          'Anak meminta ukuran 500x50, tapi dipaksa mengikuti batas induk (mentok di lebar 200, tinggi 100).',
-        ),
-        const SizedBox(height: 10),
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-            minWidth: 100,
-            maxWidth: 200,
-            minHeight: 100,
-            maxHeight: 200,
-          ),
-          child: SizedBox(
-            width: 500,
-            height: 50,
-            child: DecoratedBox(
-              decoration: const BoxDecoration(color: Colors.blue),
-              child: const Center(
-                child: Text(
-                  'Saya minta 500x50, tapi dapatnya 200x100',
-                  style: TextStyle(color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: const Color(0xFF3B82F6), width: 2),
+      ),
+      child: const CircleAvatar(
+        radius: 50,
+        backgroundColor: Color(0xFFEFF6FF),
+        child: Icon(Icons.person, size: 55, color: Color(0xFF2563EB)),
+      ),
     );
   }
 }
 
-class MyPages2 extends StatelessWidget {
-  const MyPages2({super.key});
+class ProfileInfo extends StatelessWidget {
+  final String userName;
+  final String nim;
+  final String role;
+
+  const ProfileInfo({
+    super.key,
+    required this.userName,
+    required this.nim,
+    required this.role,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          '3. Aturan Posisi (dengan Center & Align)',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        Text(
+          userName,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF0F172A),
+          ),
+          textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 10),
-        const Text(
-          'Induk abu-abu berukuran 200x200. Kotak merah 80x80 diletakkan di tengah menggunakan Center.',
-        ),
-        const SizedBox(height: 10),
-        Center(
-          child: Container(
-            width: 200,
-            height: 200,
-            color: Colors.grey[300],
-            child: Center(
-              child: Container(
-                width: 80,
-                height: 80,
-                color: Colors.red,
-                child: const Center(
-                  child: Text('Center', style: TextStyle(color: Colors.white)),
-                ),
-              ),
+        const SizedBox(height: 6),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+          decoration: BoxDecoration(
+            color: const Color(0xFFEEF2FF),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Text(
+            'NIM: $nim',
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF4F46E5),
             ),
           ),
         ),
-        const SizedBox(height: 20),
-        const Text(
-          'Induk abu-abu berukuran 200x200. Kotak hijau 80x80 ditempatkan di pojok kanan bawah menggunakan Align.',
-        ),
-        const SizedBox(height: 10),
-        Center(
-          child: Container(
-            width: 200,
-            height: 200,
-            color: Colors.grey[300],
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                width: 80,
-                height: 80,
-                color: Colors.green,
-                child: const Center(
-                  child: Text('Align', style: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ),
+        const SizedBox(height: 6),
+        Text(
+          role,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Color(0xFF64748B),
           ),
-        ),
-      ],
-    );
-  }
-}
-
-class MyPages3 extends StatelessWidget {
-  const MyPages3({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Percobaan Aturan 3 (Tanpa Center / Tight Constraints)',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        const Text(
-          'Tanpa widget Center/Align, anak merah (80x80) dipaksa memenuhi seluruh ukuran induk (200x200).',
-        ),
-        const SizedBox(height: 10),
-        Center(
-          child: Container(
-            width: 200,
-            height: 200,
-            color: Colors.grey[300],
-            child: Container(
-              width: 80,
-              height: 80,
-              color: Colors.red,
-              child: const Center(
-                child: Text('Full 200x200', style: TextStyle(color: Colors.white)),
-              ),
-            ),
-          ),
+          textAlign: TextAlign.center,
         ),
       ],
     );
