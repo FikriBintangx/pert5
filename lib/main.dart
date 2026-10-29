@@ -58,6 +58,8 @@ class _ProfilePageState extends State<ProfilePage> {
               nim: nim,
               role: role,
             ),
+            const SizedBox(height: 20),
+            const ProfileStats(),
           ],
         ),
       ),
@@ -134,6 +136,74 @@ class ProfileInfo extends StatelessWidget {
             color: Color(0xFF64748B),
           ),
           textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+}
+
+class ProfileStats extends StatelessWidget {
+  const ProfileStats({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+      ),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          StatItem(count: '6', label: 'Proyek'),
+          SizedBox(
+            height: 28,
+            child: VerticalDivider(color: Color(0xFFE2E8F0), thickness: 1),
+          ),
+          StatItem(count: '3.85', label: 'IPK'),
+          SizedBox(
+            height: 28,
+            child: VerticalDivider(color: Color(0xFFE2E8F0), thickness: 1),
+          ),
+          StatItem(count: 'Sem 5', label: 'Semester'),
+        ],
+      ),
+    );
+  }
+}
+
+class StatItem extends StatelessWidget {
+  final String count;
+  final String label;
+
+  const StatItem({
+    super.key,
+    required this.count,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          count,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF2563EB),
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 13,
+            color: Color(0xFF64748B),
+          ),
         ),
       ],
     );
