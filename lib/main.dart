@@ -33,6 +33,12 @@ class _ProfilePageState extends State<ProfilePage> {
   final String nim = '1122140142';
   final String role = 'Mobile Developer & Mahasiswa';
 
+  final List<String> experiences = [
+    'Flutter Mobile Apps - Praktikum Mobile',
+    'Aplikasi Sederhana - Project Semester 4',
+    'Web Development & REST API Explorer',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,16 +56,43 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const ProfileAvatar(),
-            const SizedBox(height: 16),
-            ProfileInfo(
-              userName: userName,
-              nim: nim,
-              role: role,
+            Center(
+              child: Column(
+                children: [
+                  const ProfileAvatar(),
+                  const SizedBox(height: 16),
+                  ProfileInfo(
+                    userName: userName,
+                    nim: nim,
+                    role: role,
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             const ProfileStats(),
+            const SizedBox(height: 24),
+            const Text(
+              'Pengalaman & Proyek',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF0F172A),
+              ),
+            ),
+            const SizedBox(height: 8),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: experiences.length,
+              itemBuilder: (context, index) {
+                return ExperienceCard(
+                  title: experiences[index],
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -206,6 +239,51 @@ class StatItem extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ExperienceCard extends StatelessWidget {
+  final String title;
+
+  const ExperienceCard({
+    super.key,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: const BorderSide(color: Color(0xFFE2E8F0)),
+      ),
+      color: Colors.white,
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        leading: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: const Color(0xFFEFF6FF),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: const Icon(
+            Icons.work_outline,
+            color: Color(0xFF2563EB),
+            size: 20,
+          ),
+        ),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF0F172A),
+          ),
+        ),
+      ),
     );
   }
 }
