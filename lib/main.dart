@@ -29,15 +29,68 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final String userName = 'Fikri Bintang Purnomo';
+  String userName = 'Fikri Bintang Purnomo';
   final String nim = '1122140142';
-  final String role = 'Mobile Developer & Mahasiswa';
+  String role = 'Mobile Developer & Mahasiswa';
 
   final List<String> experiences = [
     'Flutter Mobile Apps - Praktikum Mobile',
     'Aplikasi Sederhana - Project Semester 4',
     'Web Development & REST API Explorer',
   ];
+
+  void _showEditProfileDialog() {
+    final TextEditingController nameController =
+        TextEditingController(text: userName);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: const Text(
+            'Edit Profil',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Nama Lengkap',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.person),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('Batal'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (nameController.text.trim().isNotEmpty) {
+                  setState(() {
+                    userName = nameController.text.trim();
+                  });
+                }
+                Navigator.of(dialogContext).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Profil berhasil diperbarui')),
+                );
+              },
+              child: const Text('Simpan'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +120,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     userName: userName,
                     nim: nim,
                     role: role,
+                  ),
+                  const SizedBox(height: 14),
+                  ElevatedButton.icon(
+                    onPressed: _showEditProfileDialog,
+                    icon: const Icon(Icons.edit, size: 16),
+                    label: const Text('Edit Profil'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF2563EB),
+                      foregroundColor: Colors.white,
+                    ),
                   ),
                 ],
               ),
