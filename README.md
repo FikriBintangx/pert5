@@ -1,17 +1,13 @@
-# alignproject
+# Tugas Praktikum Mobile - Pertemuan 5
 
-A new Flutter project.
+Tugas praktikum Flutter pertemuan 5: pembuatan halaman profil dan custom widgets.
 
-## Getting Started
+## Data Mahasiswa
+- **Nama**: Fikri Bintang Purnomo
+- **NIM**: 1122140142
+- **Kelas / Matkul**: Pemrograman Mobile
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Penjelasan Singkat
+- Menggunakan widget modular: ProfileAvatar, ProfileInfo, ProfileStats, StatItem, dan ExperienceCard.
+- Menampilkan data profil, ringkasan statistik, dan list riwayat pengalaman.
+- Fitur interaktif: dialog form edit profil untuk mengubah nama pengguna secara langsung.
